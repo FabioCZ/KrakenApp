@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
@@ -40,7 +41,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @OnClick(R.id.fab_resources)
     public void showResourcesMenu() {
-
+        Intent intent = new Intent(this, ResourcesActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -51,6 +53,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        ButterKnife.bind(this);
     }
 
 

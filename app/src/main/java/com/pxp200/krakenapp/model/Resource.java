@@ -8,6 +8,15 @@ public class Resource {
     private String name;
     private String description;
     private int value;
+    private String imageUrl;
+
+
+    public Resource(String name, String description, int value, String imageUrl) {
+        this.name = name;
+        this.description = description;
+        this.value = value;
+        this.imageUrl = imageUrl;
+    }
 
     public String getName() {
         return name;
@@ -31,5 +40,13 @@ public class Resource {
 
     public void setValue(int value) {
         this.value = value;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 }

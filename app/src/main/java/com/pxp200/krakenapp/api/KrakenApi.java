@@ -1,5 +1,9 @@
 package com.pxp200.krakenapp.api;
 
+import com.pxp200.krakenapp.model.Resource;
+
+import java.util.ArrayList;
+
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -12,4 +16,24 @@ public interface KrakenApi {
 
     @GET("user/{username}")
     Call<String> getUserData(@Path("username") String username);
+
+    @GET("static/resources")
+    Call<ArrayList<Resource>> getStaticResources();
+
+
+    /*
+            KrakenApplication.getKrakenApi(this).getStaticResources()
+                .enqueue(new Callback<ArrayList<Resource>>() {
+                    @Override
+                    public void onResponse(Call<ArrayList<Resource>> call, Response<ArrayList<Resource>> response) {
+                        Toast.makeText(SignInActivity.this, "stuff", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onFailure(Call<ArrayList<Resource>> call, Throwable t) {
+                        Toast.makeText(SignInActivity.this, "no stuff", Toast.LENGTH_LONG).show();
+
+                    }
+                });
+     */
 }

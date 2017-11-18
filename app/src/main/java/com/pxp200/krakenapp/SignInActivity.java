@@ -20,6 +20,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.pxp200.krakenapp.Storage.UsernamePreference;
+import com.pxp200.krakenapp.model.Resource;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +29,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 

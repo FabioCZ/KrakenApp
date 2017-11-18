@@ -19,7 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class KrakenApplication extends Application {
 
-    public static final String BASE_URL = "http://pizza.com/";
+    public static final String BASE_URL = "http://192.241.225.133/";
     private KrakenApi krakenApi;
 
     public static KrakenApi getKrakenApi(Context context) {

@@ -5,11 +5,14 @@
     android:layout_height="60dp"
     android:layout_width="match_parent"
     android:layout_margin="8dp">
+
     <ImageView
         android:id="@+id/resource_cell_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true" />
+        android:layout_width="22dp"
+        android:layout_height="22dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="4dp"/>
     <TextView
         android:id="@+id/resource_cell_name"
         android:layout_width="wrap_content"
@@ -26,9 +29,11 @@
         android:textSize="16dp"
         tools:text="42069"/>
     <TextView
+        android:id="@+id/resource_cell_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/resource_cell_value"
         tools:text="This is a description"
-        android:maxLines="2"/>
+        android:maxLines="2"
+        android:layout_alignStart="@+id/resource_cell_name"/>
 </RelativeLayout>
