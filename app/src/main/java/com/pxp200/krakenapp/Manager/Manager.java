@@ -109,5 +109,6 @@ public class Manager extends Service {
 
 
     public void update(long delta) {
+
     }
 }

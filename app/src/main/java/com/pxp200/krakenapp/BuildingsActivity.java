@@ -1,8 +1,5 @@
 package com.pxp200.krakenapp;
 
-import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -12,66 +9,68 @@ import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.pxp200.krakenapp.Manager.Manager;
+import com.pxp200.krakenapp.model.BuildingInfo;
 import com.pxp200.krakenapp.model.Resource;
-import com.pxp200.krakenapp.model.Upgrade;
 
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class UpgradesActivity extends AppCompatActivity {
+public class BuildingsActivity extends AppCompatActivity {
 
-    @BindView(R.id.upgrades_recycler)
+    @BindView(R.id.buildings_recycler)
     RecyclerView recyclerView;
+    BuildingsAdapter adapter;
 
-    UpgradesAdapter adapter;
+    Manager manager;
+
+
+    ArrayList<BuildingInfo> fakeB = new ArrayList<>(Arrays.asList(new BuildingInfo("Pizzeria"), new BuildingInfo("Pizza Factory")));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_upgrades);
+        setContentView(R.layout.activity_buildings);
         ButterKnife.bind(this);
-        adapter = new UpgradesAdapter();
-        adapter.setUpgrades(new ArrayList<>(Arrays.asList(new Upgrade("Pizza"), new Upgrade("Pizza Upgrade2")))); //TODO
+
+        manager = KrakenApplication.getManager(this);
+
+        adapter = new BuildingsAdapter();
+        adapter.setResources(fakeB);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(adapter);
     }
 
-
-    public class UpgradesAdapter extends RecyclerView.Adapter<UpgradeViewHolder>
+    public class BuildingsAdapter extends RecyclerView.Adapter<BuildingViewHolder>
     {
         private int expandedPosition = -1;
-        ArrayList<Upgrade> upgrades;
+        ArrayList<BuildingInfo> buildingInfos;
 
-        public void setUpgrades(ArrayList<Upgrade> upgrades) {
-            this.upgrades = upgrades;
+        public void setResources(ArrayList<BuildingInfo> buildingInfos) {
+            this.buildingInfos = buildingInfos;
             this.notifyDataSetChanged();
         }
 
         @Override
-        public UpgradeViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        public BuildingViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-            return new UpgradeViewHolder(inflater.inflate(R.layout.view_upgrade_cell, parent, false));
+            return new BuildingViewHolder(inflater.inflate(R.layout.view_building_cell, parent, false));
         }
 
         @Override
-        public void onBindViewHolder(final UpgradeViewHolder holder, final int position) {
+        public void onBindViewHolder(final BuildingViewHolder holder, final int position) {
             final boolean isExpanded = position == expandedPosition;
             holder.expandedPart.setVisibility(isExpanded?View.VISIBLE:View.GONE);
             holder.itemView.setActivated(isExpanded);
@@ -84,41 +83,46 @@ public class UpgradesActivity extends AppCompatActivity {
                     notifyDataSetChanged();
                 }
             });
-            holder.bind(upgrades.get(position));
+            holder.bind(buildingInfos.get(position));
         }
 
         @Override
         public int getItemCount() {
-            return upgrades.size();
+            return buildingInfos.size();
         }
     }
 
-    public static class UpgradeViewHolder extends RecyclerView.ViewHolder
+    public static class BuildingViewHolder extends RecyclerView.ViewHolder
     {
-        @BindView(R.id.upgrade_name)
-        TextView name;
-        @BindView(R.id.upgrade_expanded_part)
-        RelativeLayout expandedPart;
 
-        @BindView(R.id.upgrade_expand_icon)
+        @BindView(R.id.building_consumes)
+        TextView consumes;
+        @BindView(R.id.buildings_produces)
+        TextView produces;
+        @BindView(R.id.building_name)
+        TextView name;
+        @BindView(R.id.building_you_own)
+        TextView youOwn;
+
+        @BindView(R.id.building_expand_icon)
         ImageView expandIcon;
 
-        @BindView(R.id.upgrade_costs)
-        TextView costsList;
+        @BindView(R.id.building_expanded_part)
+        RelativeLayout expandedPart;
 
-        public UpgradeViewHolder(View itemView) {
+        public BuildingViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-        public void bind(Upgrade data) {
+        public void bind(BuildingInfo data) {
+            consumes.setText(data.getConsumesString());
+            produces.setText(data.getProducesString());
             name.setText(data.getName());
-            costsList.setText(data.getCostsString());
-        }
 
-        @OnClick(R.id.upgrade_buy)
-        public void buyUpgrade() {
-            KrakenApplication.getKrakenApi(itemView.getContext());
+            //get own count
+            youOwn.setText("You own: " + 123);
+
         }
     }
 }
