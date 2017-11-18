@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.media.MediaPlayer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -19,7 +20,9 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.pxp200.krakenapp.BBD.BBDActivity;
 import com.pxp200.krakenapp.Storage.UsernamePreference;
+import com.pxp200.krakenapp.Tutorial.TutorialActivity;
 import com.pxp200.krakenapp.api.KrakenApi;
 import com.pxp200.krakenapp.model.Building;
 
@@ -36,12 +39,40 @@ import retrofit2.Response;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     private GoogleMap mMap;
+    MediaPlayer musicPlayer;
+    int soundVolume = 50;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        musicPlayer = MediaPlayer.create(this, R.raw.prelude);
+        musicPlayer.setVolume(100, soundVolume);
+        musicPlayer.start();
+        musicPlayer.setLooping(true);
+    }
     private KrakenApi krakenApi;
 
 //    private ArrayList<>
 
     @BindView(R.id.map_username)
     TextView username;
+
+    @OnClick(R.id.fab_tutorial)
+    public void tutorial() {
+        musicPlayer.stop();
+
+        Intent intent = new Intent(this, TutorialActivity.class);
+        startActivity(intent);
+    }
+    @OnClick(R.id.fab_bbd)
+    public void bbd() {
+        musicPlayer.stop();
+
+        Intent intent = new Intent(this, BBDActivity.class);
+        startActivity(intent);
+
+    }
 
     @OnClick(R.id.fab_logout)
     public void logout() {
@@ -79,6 +110,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         ButterKnife.bind(this);
         username.setText(UsernamePreference.get(this));
+
         krakenApi = KrakenApplication.getKrakenApi(this);
     }
 
