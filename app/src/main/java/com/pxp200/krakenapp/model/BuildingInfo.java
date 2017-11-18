@@ -12,6 +12,10 @@ public class BuildingInfo {
     protected ArrayList<Resource> consumes;
     protected String name;
 
+    public BuildingInfo(String name) {
+        this.name = name;
+    }
+
     public String getId() {
         return id;
     }
@@ -42,5 +46,13 @@ public class BuildingInfo {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getProducesString() {
+        return "Gold 12\nSilver 10";
+    }
+
+    public String getConsumesString() {
+        return "Pizza 10\nWood 6";
     }
 }
