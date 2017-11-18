@@ -18,6 +18,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.pxp200.krakenapp.Storage.UsernamePreference;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -64,6 +66,9 @@ public class SignInActivity extends AppCompatActivity {
                 .enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
+                        String username = usernameEdit.getText().toString();
+                        UsernamePreference.set(getApplicationContext(), username);
+
                         Intent intent = new Intent(SignInActivity.this, MapsActivity.class);
                         startActivity(intent);
                         finish();
@@ -71,6 +76,10 @@ public class SignInActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
+                        //TODO remove this success code from the failure function
+                        String username = usernameEdit.getText().toString();
+                        UsernamePreference.set(getApplicationContext(), username);
+
                         Intent intent = new Intent(SignInActivity.this, MapsActivity.class);
                         startActivity(intent);
                         finish();
