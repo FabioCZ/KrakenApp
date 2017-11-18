@@ -1,4 +1,4 @@
-<upgrades>
+<resources>
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -11,4 +11,4 @@
     <style name="MenuButtonsStyle">
         <item name="fab_size">mini</item>
     </style>
-</upgrades>
+</resources>
