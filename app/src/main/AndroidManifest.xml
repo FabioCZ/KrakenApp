@@ -30,7 +30,7 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="asdsad" />
+            android:value="@string/google_maps_key" />
 
         <activity
             android:name=".MapsActivity"
@@ -38,11 +38,11 @@
         <activity android:name=".ResourcesActivity" />
         <activity android:name=".UpgradesActivity" />
         <activity android:name=".Tutorial.TutorialActivity" />
-        <activity android:name=".BBD.BBDActivity"></activity>
+        <activity android:name=".BBD.BBDActivity" />
 
         <service android:name=".Manager.Manager" />
 
-        <activity android:name=".BuildingsActivity"></activity>
+        <activity android:name=".BuildingsActivity" />
     </application>
 
 </manifest>
