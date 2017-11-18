@@ -1,4 +1,5 @@
 <resources>
     <string name="title_activity_maps">Map</string>
     <string name="app_name">Kraken</string>
+    <string name="title_activity_upgrade">UpgradeActivity</string>
 </resources>
