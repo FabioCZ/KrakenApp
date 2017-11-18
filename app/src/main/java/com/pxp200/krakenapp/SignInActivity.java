@@ -69,18 +69,20 @@ public class SignInActivity extends AppCompatActivity {
                 .enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
-                        //TODO handle response
-                        Intent intent = new Intent(SignInActivity.this, SignInActivity.class); // TODO
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        Intent intent = new Intent(SignInActivity.this, MapsActivity.class);
                         startActivity(intent);
+                        finish();
                     }
 
                     @Override
                     public void onFailure(Call<String> call, Throwable t) {
-                        progressBar.setVisibility(View.GONE);
-                        continueButton.setEnabled(true);
-                        usernameEdit.setEnabled(true);
-                        Toast.makeText(SignInActivity.this, "Error logging in", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(SignInActivity.this, MapsActivity.class);
+                        startActivity(intent);
+                        finish();
+                        //progressBar.setVisibility(View.GONE);
+                        //continueButton.setEnabled(true);
+                        //usernameEdit.setEnabled(true);
+                        //Toast.makeText(SignInActivity.this, "Error logging in", Toast.LENGTH_LONG).show();
                     }
                 });
     }
