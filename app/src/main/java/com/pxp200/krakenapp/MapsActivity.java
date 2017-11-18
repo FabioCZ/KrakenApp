@@ -50,7 +50,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @OnClick(R.id.fab_upgrades)
     public void showUpgradeMenu() {
-
+        Intent intent = new Intent(this, UpgradesActivity.class);
+        startActivity(intent);
     }
 
     @OnClick(R.id.fab_resources)

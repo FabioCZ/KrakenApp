@@ -35,6 +35,7 @@
             android:label="@string/title_activity_maps"></activity>
 
         <activity android:name=".ResourcesActivity"/>
+        <activity android:name=".UpgradesActivity"/>
     </application>
 
 </manifest>

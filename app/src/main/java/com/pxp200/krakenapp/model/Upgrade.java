@@ -14,6 +14,10 @@ public class Upgrade {
     private String imageUrl;
     private Map<String, Double> multiplies;
 
+    public Upgrade(String name) {
+        this.name = name;
+    }
+
     public Map<String, Integer> getCost() {
         return cost;
     }
