@@ -33,14 +33,9 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class SignInActivity extends AppCompatActivity {
-    @BindView(R.id.sign_in_username)
-    EditText usernameEdit;
-
-    @BindView(R.id.sign_in_continue)
-    Button continueButton;
-
-    @BindView(R.id.sign_in_progress)
-    ProgressBar progressBar;
+    @BindView(R.id.sign_in_username) EditText usernameEdit;
+    @BindView(R.id.sign_in_continue) Button continueButton;
+    @BindView(R.id.sign_in_progress) ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

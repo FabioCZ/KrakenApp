@@ -1,4 +1,4 @@
-package com.pxp200.krakenapp;
+package com.pxp200.krakenapp.Storage;
 
 import android.content.Context;
 import android.content.SharedPreferences;
