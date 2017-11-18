@@ -29,6 +29,6 @@ public interface KrakenApi {
     @GET("static/structures")
     Call<ArrayList<BuildingInfo>> getStaticBuildings();
 
-    @GET("structures/{lat}/{long}")
+    @GET("get_structures/{lat}/{long}")
     Call<ArrayList<Building>> getBuildingsInArea(@Path("lat")int lat, @Path("long")int longitude);
 }

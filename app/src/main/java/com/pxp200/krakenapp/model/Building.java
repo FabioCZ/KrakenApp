@@ -1,30 +1,33 @@
 package com.pxp200.krakenapp.model;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 /**
  * Created by fabio.gottlicher on 11/18/17.
  */
 
 public class Building {
 
-    protected double latitude;
-    protected double longitude;
+    protected int latitude;
+    protected int longitude;
     protected String id;
     protected String staticId;
 
 
-    public double getLatitude() {
+    public int getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(double latitude) {
+    public void setLatitude(int latitude) {
         this.latitude = latitude;
     }
 
-    public double getLongitude() {
+    public int getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(double longitude) {
+    public void setLongitude(int longitude) {
         this.longitude = longitude;
     }
 
@@ -42,5 +45,9 @@ public class Building {
 
     public void setStaticId(String staticId) {
         this.staticId = staticId;
+    }
+
+    public MarkerOptions getMarkerOptions(BuildingInfo info) {
+        return new MarkerOptions().position(new LatLng(latitude, longitude)).title(info.getName());
     }
 }

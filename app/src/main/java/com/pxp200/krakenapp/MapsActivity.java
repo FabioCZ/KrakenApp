@@ -8,6 +8,8 @@ import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.media.MediaPlayer;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -21,10 +23,12 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.pxp200.krakenapp.BBD.BBDActivity;
+import com.pxp200.krakenapp.Manager.Manager;
 import com.pxp200.krakenapp.Storage.UsernamePreference;
 import com.pxp200.krakenapp.Tutorial.TutorialActivity;
 import com.pxp200.krakenapp.api.KrakenApi;
 import com.pxp200.krakenapp.model.Building;
+import com.pxp200.krakenapp.model.BuildingInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +45,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap mMap;
     MediaPlayer musicPlayer;
     int soundVolume = 50;
+    List<BuildingInfo> buildingMarkers = new ArrayList<>();
+    private KrakenApi krakenApi;
+    private Manager manager;
 
     @Override
     protected void onResume() {
@@ -51,9 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         musicPlayer.start();
         musicPlayer.setLooping(true);
     }
-    private KrakenApi krakenApi;
 
-//    private ArrayList<>
 
     @BindView(R.id.map_username)
     TextView username;
@@ -112,6 +117,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         username.setText(UsernamePreference.get(this));
 
         krakenApi = KrakenApplication.getKrakenApi(this);
+        manager = KrakenApplication.getManager(this);
     }
 
 
@@ -138,18 +144,46 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             mMap.setMyLocationEnabled(true);
 //            addAllMarkers();
-            updateBuildingsNearby(location );
+            updateBuildingsNearby();
         }
     }
 
-    public void updateBuildingsNearby(Location location) {
+    public void updateBuildingsNearby() {
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        Criteria criteria = new Criteria();
+        Location location = null;
+        try {
+            location = locationManager.getLastKnownLocation(locationManager.getBestProvider(criteria, false));
+        } catch (SecurityException e) {
+            //go away
+        }
         int lat = (int)(location.getLatitude() * 1000);
         int longi = (int)(location.getLongitude() * 1000);
 
         krakenApi.getBuildingsInArea(lat, longi).enqueue(new Callback<ArrayList<Building>>() {
             @Override
             public void onResponse(Call<ArrayList<Building>> call, Response<ArrayList<Building>> response) {
+                clearMarkers();
+                ArrayList<Building> nearbyBldg= response.body();
+                ArrayList<BuildingInfo> bldgInfo = manager.staticBuildings;
 
+                if(nearbyBldg == null) {
+                    return;
+                }
+                for(Building b : nearbyBldg) {
+                    for(BuildingInfo bi : bldgInfo) {
+                        if(bi.getId().equals(b.getStaticId())) {
+                            mMap.addMarker(b.getMarkerOptions(bi));
+                        }
+                    }
+                }
+
+                new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        updateBuildingsNearby();
+                    }
+                }, 30000); //every 30 sec?
             }
 
             @Override
@@ -166,17 +200,5 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void clearMarkers() {
         mMap.clear();
-    }
-
-    public void addAllMarkers() {
-        List<BuildingMarker> buildingMarkers = new ArrayList<>();
-        buildingMarkers.add(new BuildingMarker("A", 41.7, 110.8));
-        buildingMarkers.add(new BuildingMarker("B", 41.7, 112.8));
-        buildingMarkers.add(new BuildingMarker("C", 40.7, 111.8));
-        buildingMarkers.add(new BuildingMarker("D", 41.7, 112.8));
-        buildingMarkers.add(new BuildingMarker("E", 42.7, 111.8));
-        for(BuildingMarker buildingMarker : buildingMarkers) {
-            mMap.addMarker(buildingMarker.getMarkerOptions());
-        }
     }
 }
