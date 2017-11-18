@@ -138,7 +138,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             mMap.setMyLocationEnabled(true);
 //            addAllMarkers();
-            updateBuildingsNearby(location);
+            updateBuildingsNearby(location );
         }
     }
 

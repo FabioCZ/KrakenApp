@@ -38,6 +38,12 @@ public class Manager extends Service {
     public UserResponse user;
     public boolean userSet = false;
 
+    public ArrayList<UserUpdateListener> listeners;
+
+    public interface UserUpdateListener {
+        void updated(Manager manager);
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -63,6 +69,11 @@ public class Manager extends Service {
                             syncWithServer();
                         }
                         update(delta);
+                        if(listeners != null) {
+                            for (UserUpdateListener l : listeners) {
+                                l.updated(Manager.this);
+                            }
+                        }
                     }
                 }, 0, 1000); //update resources
             }
@@ -75,6 +86,19 @@ public class Manager extends Service {
     public IBinder onBind(Intent intent) {
 
         return null;
+    }
+
+    public void addListener(UserUpdateListener listener) {
+        if(listeners == null) {
+            listeners = new ArrayList<UserUpdateListener>();
+        }
+        listeners.add(listener);
+    }
+
+    public void removeListener(UserUpdateListener listener) {
+        if(listeners != null) {
+            listeners.remove(listener);
+        }
     }
 
     public void setInitialUser(UserResponse userRes) {
