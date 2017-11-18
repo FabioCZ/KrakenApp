@@ -19,6 +19,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     private GoogleMap mMap;
@@ -56,7 +59,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .build();                   // Creates a CameraPosition from the builder
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             mMap.setMyLocationEnabled(true);
-            mMap.addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())));
+            addAllMarkers();
         }
     }
 
@@ -70,5 +73,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     public void addAllMarkers() {
+        List<BuildingMarker> buildingMarkers = new ArrayList<>();
+        buildingMarkers.add(new BuildingMarker("A", 41.7, 110.8));
+        buildingMarkers.add(new BuildingMarker("B", 41.7, 112.8));
+        buildingMarkers.add(new BuildingMarker("C", 40.7, 111.8));
+        buildingMarkers.add(new BuildingMarker("D", 41.7, 112.8));
+        buildingMarkers.add(new BuildingMarker("E", 42.7, 111.8));
+        for(BuildingMarker buildingMarker : buildingMarkers) {
+            mMap.addMarker(buildingMarker.getMarkerOptions());
+        }
     }
 }
