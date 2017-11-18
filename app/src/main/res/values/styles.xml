@@ -8,4 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="MenuButtonsStyle">
+        <item name="fab_size">mini</item>
+    </style>
 </resources>

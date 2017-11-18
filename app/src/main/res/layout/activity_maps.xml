@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp">
@@ -24,17 +24,23 @@
             android:id="@+id/fab_buildings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_label="Buildings" />
+            fab:fab_label="Buildings"
+            android:src="@drawable/ic_house_black_24dp"
+            fab:fab_size="mini"/>
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_upgrades"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_label="Upgrades" />
+            fab:fab_label="Upgrades"
+            android:src="@drawable/ic_star_black_24dp"
+            fab:fab_size="mini"/>
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_resources"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            fab:fab_label="Other Stuff" />
+            fab:fab_label="Resources"
+            android:src="@drawable/ic_euro_symbol_black_24dp"
+            fab:fab_size="mini"/>
     </com.github.clans.fab.FloatingActionMenu>
 
 
