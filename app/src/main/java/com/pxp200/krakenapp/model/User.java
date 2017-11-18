@@ -21,7 +21,7 @@ public class User {
         buildings = new ArrayList<>();
     }
 
-    public void incrementResource(String resource, Integer cnt){
+    public void incrementResource(String resource, double cnt){
         //INCREMENT RESOURCE
 
     }

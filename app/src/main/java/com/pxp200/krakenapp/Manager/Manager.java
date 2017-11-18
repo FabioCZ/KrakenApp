@@ -77,7 +77,8 @@ public class Manager extends Service {
         return null;
     }
 
-    public void setInitialUser(UserResponse user) {
+    public void setInitialUser(UserResponse userRes) {
+        user = userRes;
         if(user.getResources() == null || user.getResources().size() == 0) {
             HashMap<String, Double> res = new HashMap<>();
             for(Resource r : staticResources) {
@@ -94,10 +95,6 @@ public class Manager extends Service {
         userSet = true;
     }
     //updates periodically to apply new changes to the server
-    public void syncWithServer() {
-        KrakenApplication.getKrakenApi(this.getBaseContext());
-    }
-    
     public void syncWithServer() {
         KrakenApplication.getKrakenApi(this.getBaseContext());
     }
@@ -126,12 +123,12 @@ public class Manager extends Service {
                     if(execute){
                         for(int z = 0; z < this.staticBuildings.get(y).getConsumes().size(); z++) {
                             this.user.incrementResource(this.staticBuildings.get(y).getConsumes().get(z).getName(),
-                                    this.user.getResources().get(this.staticBuildings.get(y).getConsumes().get(z).getAmount() * delta/1000.0*-1);
+                                    this.staticBuildings.get(y).getConsumes().get(z).getAmount() * delta/1000.0*-1);
                             //lower consumed resources
                         }
                         for(int z = 0; z < this.staticBuildings.get(y).getProduces().size(); z++) {
                             this.user.incrementResource(this.staticBuildings.get(y).getProduces().get(z).getName(),
-                                    this.user.getResources().get(this.staticBuildings.get(y).getProduces().get(z).getAmount() * delta/1000.0);
+                                    this.staticBuildings.get(y).getProduces().get(z).getAmount() * delta/1000.0);
                         }
                     }
 
