@@ -21,6 +21,11 @@ public class User {
         buildings = new ArrayList<>();
     }
 
+    public void incrementResource(String resource, Integer cnt){
+        //INCREMENT RESOURCE
+
+    }
+
     public String getName() {
         return name;
     }

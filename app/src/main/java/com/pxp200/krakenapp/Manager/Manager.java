@@ -97,6 +97,10 @@ public class Manager extends Service {
     public void syncWithServer() {
         KrakenApplication.getKrakenApi(this.getBaseContext());
     }
+    
+    public void syncWithServer() {
+        KrakenApplication.getKrakenApi(this.getBaseContext());
+    }
 
     //when you close the app and reopen and accrue resources
     public void resume() {
@@ -109,5 +113,30 @@ public class Manager extends Service {
 
 
     public void update(long delta) {
+        ArrayList<String> userBuildings = user.getBuildings();
+        for (int i = 0; i < userBuildings.size(); i++){
+            for(int y = 0; y < this.staticBuildings.size(); y++) {
+                if (this.staticBuildings.get(y).getName() == userBuildings.get(i)) {
+                    boolean execute = true;
+                    for(int z = 0; z < this.staticBuildings.get(y).getConsumes().size(); z++) {
+                        if (this.user.getResources().get(this.staticBuildings.get(y).getName()) < this.staticBuildings.get(y).getConsumes().get(z).getAmount()) {
+                            execute = false;
+                        }
+                    }
+                    if(execute){
+                        for(int z = 0; z < this.staticBuildings.get(y).getConsumes().size(); z++) {
+                            this.user.incrementResource(this.staticBuildings.get(y).getConsumes().get(z).getName(),
+                                    this.user.getResources().get(this.staticBuildings.get(y).getConsumes().get(z).getAmount() * delta/1000.0*-1);
+                            //lower consumed resources
+                        }
+                        for(int z = 0; z < this.staticBuildings.get(y).getProduces().size(); z++) {
+                            this.user.incrementResource(this.staticBuildings.get(y).getProduces().get(z).getName(),
+                                    this.user.getResources().get(this.staticBuildings.get(y).getProduces().get(z).getAmount() * delta/1000.0);
+                        }
+                    }
+
+                }
+            }
+        }
     }
 }
