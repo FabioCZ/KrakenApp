@@ -1,6 +1,7 @@
 package com.pxp200.krakenapp.model;
 
 
+import android.text.SpannableString;
 import java.util.Map;
 
 /**
@@ -56,5 +57,10 @@ public class Upgrade {
 
     public void setMultiplies(Map<String, Double> multiplies) {
         this.multiplies = multiplies;
+    }
+
+    public SpannableString getCostsString ()
+    {
+        return new SpannableString("Gold 10/10 \nSilver 10/30");
     }
 }

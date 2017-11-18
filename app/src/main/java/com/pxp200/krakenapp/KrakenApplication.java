@@ -6,6 +6,7 @@ import android.content.Context;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.pxp200.krakenapp.Manager.Manager;
 import com.pxp200.krakenapp.api.KrakenApi;
 
 import java.io.IOException;
@@ -29,6 +30,18 @@ public class KrakenApplication extends Application {
     public static final MediaType DEFAULT_MEDIA_TYPE = MediaType.parse("application/x-www-form-urlencoded");
     public static final String BASE_URL = "http://192.241.225.133/";
     private KrakenApi krakenApi;
+    private Manager manager;
+
+
+
+    public static void setManager(Context context, Manager manager) {
+        KrakenApplication app = (KrakenApplication) context.getApplicationContext();
+        app.manager = manager;
+    }
+    public static Manager getManager(Context context) {
+        KrakenApplication app = (KrakenApplication) context.getApplicationContext();
+        return app.manager;
+    }
 
     public static KrakenApi getKrakenApi(Context context) {
         KrakenApplication app = (KrakenApplication) context.getApplicationContext();
