@@ -20,6 +20,8 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.pxp200.krakenapp.Storage.UsernamePreference;
+import com.pxp200.krakenapp.api.KrakenApi;
+import com.pxp200.krakenapp.model.Building;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +29,16 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     private GoogleMap mMap;
+    private KrakenApi krakenApi;
+
+//    private ArrayList<>
 
     @BindView(R.id.map_username)
     TextView username;
@@ -71,6 +79,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mapFragment.getMapAsync(this);
         ButterKnife.bind(this);
         username.setText(UsernamePreference.get(this));
+        krakenApi = KrakenApplication.getKrakenApi(this);
     }
 
 
@@ -96,8 +105,26 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     .build();                   // Creates a CameraPosition from the builder
             mMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             mMap.setMyLocationEnabled(true);
-            addAllMarkers();
+//            addAllMarkers();
+            updateBuildingsNearby(location);
         }
+    }
+
+    public void updateBuildingsNearby(Location location) {
+        int lat = (int)(location.getLatitude() * 1000);
+        int longi = (int)(location.getLongitude() * 1000);
+
+        krakenApi.getBuildingsInArea(lat, longi).enqueue(new Callback<ArrayList<Building>>() {
+            @Override
+            public void onResponse(Call<ArrayList<Building>> call, Response<ArrayList<Building>> response) {
+
+            }
+
+            @Override
+            public void onFailure(Call<ArrayList<Building>> call, Throwable t) {
+
+            }
+        });
     }
 
     @Override
