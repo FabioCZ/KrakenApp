@@ -1,5 +1,9 @@
 package com.pxp200.krakenapp;
 
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.widget.Button;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -21,8 +25,14 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class SignInActivity extends AppCompatActivity {
+import java.util.Timer;
+import java.util.TimerTask;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
+
+public class SignInActivity extends AppCompatActivity {
     @BindView(R.id.sign_in_username)
     EditText usernameEdit;
 
@@ -31,7 +41,6 @@ public class SignInActivity extends AppCompatActivity {
 
     @BindView(R.id.sign_in_progress)
     ProgressBar progressBar;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
