@@ -1,11 +1,15 @@
 package com.pxp200.krakenapp.api;
 
 import com.pxp200.krakenapp.model.Resource;
+import com.pxp200.krakenapp.model.User;
+import com.pxp200.krakenapp.model.UserResponse;
 
 import java.util.ArrayList;
 
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 
 /**
@@ -14,8 +18,8 @@ import retrofit2.http.Path;
 
 public interface KrakenApi {
 
-    @GET("user/{username}")
-    Call<String> getUserData(@Path("username") String username);
+    @POST("users")
+    Call<UserResponse> getUser(@Body User user);
 
     @GET("static/resources")
     Call<ArrayList<Resource>> getStaticResources();

@@ -97,7 +97,7 @@ public class ResourcesActivity extends AppCompatActivity {
         public void bind(Resource data) {
             Glide.with(image).load(data.getImageUrl()).into(image);
             name.setText(data.getName());
-            value.setText(Integer.toString(data.getValue()));
+            value.setText(Integer.toString(data.getAmount()));
             description.setText(data.getDescription());
         }
     }

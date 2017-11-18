@@ -10,6 +10,7 @@ import android.location.LocationManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -18,16 +19,29 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.pxp200.krakenapp.Storage.UsernamePreference;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener {
 
     private GoogleMap mMap;
+
+    @BindView(R.id.map_username)
+    TextView username;
+
+    @OnClick(R.id.fab_logout)
+    public void logout() {
+        UsernamePreference.clear(this);
+        Intent intent = new Intent(this, SignInActivity.class);
+        startActivity(intent);
+        finish();
+    }
 
     @OnClick(R.id.fab_buildings)
     public void showBuildingMenu() {
@@ -54,6 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         ButterKnife.bind(this);
+        username.setText(UsernamePreference.get(this));
     }
 
 

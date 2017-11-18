@@ -7,14 +7,14 @@ package com.pxp200.krakenapp.model;
 public class Resource {
     private String name;
     private String description;
-    private int value;
+    private int amount;
     private String imageUrl;
 
 
-    public Resource(String name, String description, int value, String imageUrl) {
+    public Resource(String name, String description, int amount, String imageUrl) {
         this.name = name;
         this.description = description;
-        this.value = value;
+        this.amount = amount;
         this.imageUrl = imageUrl;
     }
 
@@ -34,12 +34,12 @@ public class Resource {
         this.description = description;
     }
 
-    public int getValue() {
-        return value;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setValue(int value) {
-        this.value = value;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     public String getImageUrl() {

@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_height="match_parent"
     android:layout_width="match_parent"
-    xmlns:fab="http://schemas.android.com/apk/res-auto">
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -10,6 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context="com.pxp200.krakenapp.MapsActivity" />
+
+    <TextView
+        android:id="@+id/map_username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16dp"
+        android:layout_margin="4dp"
+        tools:text="username"/>
 
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/fab_menu"
@@ -20,6 +29,13 @@
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp">
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/fab_logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            fab:fab_label="Log out"
+            android:src="@drawable/ic_exit_to_app_black_24dp"
+            fab:fab_size="mini"/>
         <com.github.clans.fab.FloatingActionButton
             android:id="@+id/fab_buildings"
             android:layout_width="wrap_content"
@@ -35,12 +51,13 @@
             android:src="@drawable/ic_star_black_24dp"
             fab:fab_size="mini"/>
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/fab_resources"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_label="Resources"
-            android:src="@drawable/ic_euro_symbol_black_24dp"
-            fab:fab_size="mini"/>
+        android:id="@+id/fab_resources"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        fab:fab_label="Resources"
+        android:src="@drawable/ic_euro_symbol_black_24dp"
+        fab:fab_size="mini"/>
+
     </com.github.clans.fab.FloatingActionMenu>
 
 

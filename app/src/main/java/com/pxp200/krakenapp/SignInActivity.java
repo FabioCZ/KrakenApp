@@ -1,10 +1,8 @@
 package com.pxp200.krakenapp;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -12,9 +10,11 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pxp200.krakenapp.Storage.UsernamePreference;
-import com.pxp200.krakenapp.model.Resource;
+import com.pxp200.krakenapp.model.User;
+import com.pxp200.krakenapp.model.UserResponse;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -22,14 +22,6 @@ import butterknife.OnClick;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class SignInActivity extends AppCompatActivity {
     @BindView(R.id.sign_in_username) EditText usernameEdit;
@@ -41,6 +33,12 @@ public class SignInActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
         ButterKnife.bind(this);
+
+        if(UsernamePreference.exists(this)) {
+            usernameEdit.setText(UsernamePreference.get(this));
+            onContinueClick();
+        }
+
         usernameEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -55,36 +53,38 @@ public class SignInActivity extends AppCompatActivity {
 
     @OnClick(R.id.sign_in_continue)
     public void onContinueClick() {
-        continueButton.setEnabled(false);
-        usernameEdit.setEnabled(false);
-        progressBar.setVisibility(View.VISIBLE);
-        progressBar.animate();
-        KrakenApplication.getKrakenApi(this).getUserData(usernameEdit.getText().toString())
-                .enqueue(new Callback<String>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        String username = usernameEdit.getText().toString();
-                        UsernamePreference.set(getApplicationContext(), username);
+        final String name = usernameEdit.getText().toString();
+        if(name == null || name.length() == 0) {
+            Toast.makeText(this, "Yo, enter in a username", Toast.LENGTH_LONG).show();
+        } else {
+            continueButton.setEnabled(false);
+            usernameEdit.setEnabled(false);
+            progressBar.setVisibility(View.VISIBLE);
+            progressBar.animate();
+            KrakenApplication.getKrakenApi(this).getUser(new User(name))
+                    .enqueue(new Callback<UserResponse>() {
+                        @Override
+                        public void onResponse(Call<UserResponse> call, Response<UserResponse> response) {
+                            UsernamePreference.set(getApplicationContext(), response.body().getName());
+                            Intent intent = new Intent(SignInActivity.this, MapsActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
 
-                        Intent intent = new Intent(SignInActivity.this, MapsActivity.class);
-                        startActivity(intent);
-                        finish();
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable t) {
-                        //TODO remove this success code from the failure function
-                        String username = usernameEdit.getText().toString();
-                        UsernamePreference.set(getApplicationContext(), username);
-
-                        Intent intent = new Intent(SignInActivity.this, MapsActivity.class);
-                        startActivity(intent);
-                        finish();
-                        //progressBar.setVisibility(View.GONE);
-                        //continueButton.setEnabled(true);
-                        //usernameEdit.setEnabled(true);
-                        //Toast.makeText(SignInActivity.this, "Error logging in", Toast.LENGTH_LONG).show();
-                    }
-                });
+                        @Override
+                        public void onFailure(Call<UserResponse> call, Throwable t) {
+//                        String username = usernameEdit.getText().toString();
+//                        UsernamePreference.set(getApplicationContext(), username);
+//
+//                        Intent intent = new Intent(SignInActivity.this, MapsActivity.class);
+//                        startActivity(intent);
+//                        finish();
+                            progressBar.setVisibility(View.GONE);
+                            continueButton.setEnabled(true);
+                            usernameEdit.setEnabled(true);
+                            Toast.makeText(SignInActivity.this, "Error logging in", Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }
     }
 }
