@@ -15,6 +15,7 @@ public class TutorialActivity extends AppCompatActivity {
 
     MediaPlayer musicPlayer;
     int soundVolume = 50;
+
     String[] dialog = {"Let's begin with some basics this world is built on trading within your community. Unlike most games you are only able to trade with those nearby.",
             "You can also go and harvest some food, mining, or go cut some wood!",
     "Try your skill and go on an adventure! go try and slay some goblins? Monster's in this world when killed drop gems you turn into the guild for gold that you then use to stock back up for your next journey!",
